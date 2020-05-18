@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import List from './List.jsx'
 
 const ListHeader = props => {
   return (
@@ -11,23 +12,44 @@ const ListHeader = props => {
 const App = () => {
 
   const [data, setData] = useState([])
+  const [updateData, setUpdateData] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
+  const [isError, setIsError] = useState(false)
 
-  useEffect(async () =>{
-    const options = {
-      method: 'GET',
-      headers:{
-        'Content-Type': 'application/json'
+  useEffect(() =>{
+    const fetchData = async () => {
+      setIsError(false)
+      setIsLoading(true)
+      const options = {
+        method: 'GET',
+        headers:{
+          'Content-Type': 'application/json'
+        }
       }
-    }
-    const response = await fetch('/api/transactions', options)
-    const result = await response.json()
+      try{
+        const response = await fetch('/api/transactions', options)
+        const result = await response.json()
 
-    console.log("transactions: ",result)
-  })
+        setData(result)
+      } catch {
+        setIsError(true)
+      }
+        
+      setIsLoading(false)
+    }
+    fetchData()
+  },[
+    updateData
+  ])
 
   return (
     <div className="app">
       <ListHeader />
+      <List
+        data={data}
+        loading={isLoading}
+        error={isError}
+      />
     </div>
   )
 }
