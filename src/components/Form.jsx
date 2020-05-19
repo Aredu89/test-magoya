@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from "react-datepicker";
 
-const DatePicker = props => {
-
+const DatePickerElement = props => {
+  return (
+    <div></div>
+  )
 }
 
 const Form = props => {
@@ -11,7 +13,7 @@ const Form = props => {
 
   return (
     <div className="form">
-      <DatePicker
+      <DatePickerElement
       />
     </div>
   )
