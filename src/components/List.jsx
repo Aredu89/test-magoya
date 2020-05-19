@@ -15,8 +15,8 @@ const ErrorMessage = props => {
 const SpinnerLoading = () => {
   return (
     <div className="text-center">
-      <div class="spinner-border" role="status">
-        <span class="sr-only">Loading...</span>
+      <div className="spinner-border" role="status">
+        <span className="sr-only">Loading...</span>
       </div>
     </div>
   )
@@ -24,30 +24,88 @@ const SpinnerLoading = () => {
 
 const UpdateButton = props => {
   return (
-    <Button
-      onClick={props.onClick}
-      className="update-button"
-    >Update List</Button>
+    <div className="mb-3">
+      <Button
+        onClick={props.onClick}
+        className="update-button"
+      >Update List</Button>
+    </div>
+    
   )
 }
 
 const BootstrapTable = (props) => {
+  //Formatters
+  const dateFormatter = (cell, row)=> {
+    const dateObject = new Date(cell)
+    const month = (dateObject.getMonth() + 1) < 10 ? '0'+(dateObject.getMonth() + 1) : dateObject.getMonth() + 1
+    const day = dateObject.getDate() < 10 ? '0' + dateObject.getDate() : dateObject.getDate()
+    let hours = (dateObject.getHours() + 1) < 13 ? dateObject.getHours() + 1 : dateObject.getHours() - 11
+    console.log("hours: ",hours)
+    hours = hours < 10 ? '0'+hours : hours
+    const minutes = dateObject.getMinutes() < 10 ? '0'+dateObject.getMinutes() : dateObject.getMinutes()
+    const ampm = dateObject.getHours() < 12 ? 'am' : 'pm'
+    let complete =
+      month +
+      '/' +
+      day +
+      '/' +
+      dateObject.getFullYear() +
+      ' - ' +
+      hours +
+      ':' +
+      minutes +
+      ' ' +
+      ampm
+    return complete
+  }
+  const deleteButton = (cell, row)=>{
+    return (
+      <div>
+        <Button
+          variant="contained"
+          color="secondary"
+          className="delete-button"
+        >
+          X
+        </Button>
+      </div>
+    )
+  }
   const columns = [{
     dataField: 'date',
     text: 'Date',
-    sort: true
+    sort: true,
+    formatter: dateFormatter
   }, {
     dataField: 'description',
     text: 'Description',
-    sort: true
+    sort: true,
+    headerClasses: 'description-column'
   }, {
     dataField: 'amount',
     text: 'Amount',
-    sort: true
+    sort: true,
+    style: (cell, row, rowIndex, colIndex) => {
+      if (row.amount < 0) {
+        return {
+          color: '#DF262D',
+          fontWeight: '600'
+        };
+      }
+      return {
+        color: '#3F9439',
+        fontWeight: '600'
+      };
+    }
   }, {
     dataField: '',
-    text: 'Actions',
+    text: 'Delete',
     sort: false,
+    formatter: deleteButton,
+    align: 'center',
+    headerAlign: 'center',
+    headerClasses: 'delete-column'
   }, {
     dataField: 'id',
     text: 'id',
@@ -71,7 +129,7 @@ const BootstrapTable = (props) => {
           keyField="id"
           data={ props.data }
           columns={ columns }
-          defaultSorted={ defaultSorted } 
+          defaultSorted={ defaultSorted }
         />
       )}
     </>

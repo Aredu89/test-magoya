@@ -1,10 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import List from './List.jsx'
+import { useRouter } from 'next/router'
+import Button from '@material-ui/core/Button';
+import List from './List.jsx';
 
 const ListHeader = props => {
+  const router = useRouter()
   return (
-    <div className="list-header d-flex align-items-center">
+    <div className="list-header d-flex align-items-center justify-content-between">
       <span className="title">Personal transactions</span>
+      <Button 
+        variant="contained"
+        color="primary"
+        className="add-button"
+        onClick={()=>router.push('/add')}
+        >
+        + ADD
+      </Button>
     </div>
   )
 }
