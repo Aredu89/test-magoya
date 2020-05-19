@@ -41,7 +41,6 @@ const BootstrapTable = (props) => {
     const month = (dateObject.getMonth() + 1) < 10 ? '0'+(dateObject.getMonth() + 1) : dateObject.getMonth() + 1
     const day = dateObject.getDate() < 10 ? '0' + dateObject.getDate() : dateObject.getDate()
     let hours = (dateObject.getHours() + 1) < 13 ? dateObject.getHours() + 1 : dateObject.getHours() - 11
-    console.log("hours: ",hours)
     hours = hours < 10 ? '0'+hours : hours
     const minutes = dateObject.getMinutes() < 10 ? '0'+dateObject.getMinutes() : dateObject.getMinutes()
     const ampm = dateObject.getHours() < 12 ? 'am' : 'pm'

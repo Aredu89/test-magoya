@@ -32,15 +32,24 @@ const AddHeader = props => {
 }
 
 const Add = () => {
-  const handleSave = () => {
 
+  const [date, setDate] = useState(new Date());
+  const [amount, setAmount] = useState(null)
+  const [description, setDescription] = useState('')
+
+  const handleSave = () => {
+    
   }
   return (
     <div className="add">
       <AddHeader 
         onSave={handleSave}
       />
-      <Form />
+      <Form
+        date={{date, setDate}}
+        amount={{amount, setAmount}}
+        description={{description, setDescription}}
+      />
     </div>
   )
 }
