@@ -9,8 +9,7 @@ const ListHeader = props => {
   )
 }
 
-const App = () => {
-
+const useTransactionsApi = () => {
   const [data, setData] = useState([])
   const [updateData, setUpdateData] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
@@ -42,6 +41,13 @@ const App = () => {
     updateData
   ])
 
+  return [{ data, isLoading, isError, updateData }, setUpdateData]
+}
+
+const App = () => {
+
+  const [{ data, isLoading, isError, updateData }, doUpdateData ] = useTransactionsApi()
+
   return (
     <div className="app">
       <ListHeader />
@@ -49,6 +55,7 @@ const App = () => {
         data={data}
         loading={isLoading}
         error={isError}
+        onUpdate={()=>doUpdateData(!updateData)}
       />
     </div>
   )
