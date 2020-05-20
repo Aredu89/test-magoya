@@ -2,7 +2,9 @@ import React from 'react';
 import DatePicker from "react-datepicker";
 import NumberFormat from 'react-number-format';
 
+//Date picker element
 const DatePickerElement = props => {
+  //We show a button
   const ButtonInput = ({ value, onClick }) => (
     <button className="custom-date-input" onClick={onClick}>
       {value}
@@ -26,10 +28,12 @@ const DatePickerElement = props => {
   )
 }
 
+//Amount input
 const InputAmount = props => {
   return (
     <div className="mb-3 input-amount-container">
       <div className="form-label">Amount</div>
+      {/* Input with masked numbers */}
       <NumberFormat
         className={props.amountError ? 'input-amount error' : 'input-amount'}
         thousandSeparator={true}
@@ -41,6 +45,7 @@ const InputAmount = props => {
           props.setAmountError(false)
         }} 
       />
+      {/* Options for income and outcome */}
       <span className={props.amount < 0 ? "option selected" : "option"}
         onClick={()=>{
           if(props.amount > -1) {
@@ -57,6 +62,7 @@ const InputAmount = props => {
           }
         }}
         >Income</span>
+      {/* Error */}
       {props.amountError &&
         <div className="error">Amount can´t be zero or nothing...</div>
       }
@@ -64,6 +70,7 @@ const InputAmount = props => {
   )
 }
 
+//Description input
 const InputDescription = props => {
   return (
     <div>
@@ -77,6 +84,7 @@ const InputDescription = props => {
           props.setDescriptionError(false)
         }}
       />
+      {/* Error| */}
       {
         props.descriptionError &&
         <div className="error">Add some description...</div>
@@ -86,7 +94,7 @@ const InputDescription = props => {
 }
 
 const Form = props => {
-
+  //Destructuring the props
   const { date, amount, amountError, description, descriptionError } = props
 
   return (

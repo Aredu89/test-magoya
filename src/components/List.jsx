@@ -36,6 +36,7 @@ const UpdateButton = props => {
 
 const BootstrapTable = (props) => {
   //Formatters
+  //We give format to the dates
   const dateFormatter = (cell, row)=> {
     const dateObject = new Date(cell)
     const month = (dateObject.getMonth() + 1) < 10 ? '0'+(dateObject.getMonth() + 1) : dateObject.getMonth() + 1
@@ -74,6 +75,7 @@ const BootstrapTable = (props) => {
     )
   }
 
+  //Columns configuration for ReactBootstrapTable
   const columns = [{
     dataField: 'date',
     text: 'Date',

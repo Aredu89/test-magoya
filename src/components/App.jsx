@@ -4,7 +4,8 @@ import Button from '@material-ui/core/Button';
 import List from './List.jsx';
 import Swal from 'sweetalert2';
 
-const ListHeader = props => {
+// Header with title and ADD button
+const ListHeader = () => {
   const router = useRouter()
   return (
     <div className="list-header d-flex align-items-center justify-content-between">
@@ -21,6 +22,7 @@ const ListHeader = props => {
   )
 }
 
+//Custom Hook to fetch the data
 const useTransactionsApi = () => {
   const [data, setData] = useState([])
   const [updateData, setUpdateData] = useState(true)
@@ -41,7 +43,12 @@ const useTransactionsApi = () => {
         const response = await fetch('/api/transactions', options)
         const result = await response.json()
 
-        setData(result)
+        //We handle error response
+        if(result.error){
+          setIsError(true)
+        } else {
+          setData(result)
+        }
       } catch {
         setIsError(true)
       }
@@ -50,17 +57,19 @@ const useTransactionsApi = () => {
     }
     fetchData()
   },[
-    updateData
+    updateData //If this changes we fetch the data again
   ])
 
   return [{ data, isLoading, isError, updateData }, setUpdateData]
 }
 
 const App = () => {
-
+  // Calling the custom hook that fetches the data in every render
   const [{ data, isLoading, isError, updateData }, doUpdateData ] = useTransactionsApi()
 
+  // Function for deleting a transaction
   const onDelete = id => {
+    //First we ask if the user is sure to delete the transaction
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -70,6 +79,7 @@ const App = () => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
+      //if the user confirm, we call the delete end point of the API
       if (result.value) {
         const deleteTransaction = async () => {
           const options = {
@@ -80,17 +90,19 @@ const App = () => {
           }
           try{
             const response = await fetch(`/api/transactions/${id}`, options)
-              
-            console.log("response delete: ",response)
+            
+            //We show a success alert if we deleted the transaction
             if(response.ok){
               Swal.fire(
                 'Deleted!',
                 'Your transaction has been deleted.',
                 'success'
               ).then(()=>{
+                //Updating the list
                 doUpdateData(!updateData)
               })
             } else {
+              //We show an alert for error response
               Swal.fire({
                 icon: 'error',
                 title: 'Error!',

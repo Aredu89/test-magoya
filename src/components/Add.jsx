@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import Form from './Form.jsx';
 import Swal from 'sweetalert2';
 
+//Spinner
 const SpinnerLoading = () => {
   return (
     <div className="save-pending">
@@ -14,6 +15,7 @@ const SpinnerLoading = () => {
   )
 }
 
+//Header with title, cancel and save buttons
 const AddHeader = props => {
   const router = useRouter()
   return (
@@ -36,6 +38,7 @@ const AddHeader = props => {
           >
           SAVE
         </Button>
+        {/* Spinner */}
         {props.pending &&
           <SpinnerLoading />
         }
@@ -48,6 +51,7 @@ const AddHeader = props => {
 const Add = () => {
   const router = useRouter()
 
+  //State
   const [date, setDate] = useState(new Date());
   const [amount, setAmount] = useState(null)
   const [amountError, setAmountError] = useState(false)
@@ -57,7 +61,7 @@ const Add = () => {
 
   //Save the transaction
   const handleSave = async () => {
-    //Error controls
+    //Error control
     if(amount === 0 || !amount){
       setAmountError(true)
       if(!description){
@@ -88,17 +92,20 @@ const Add = () => {
       const result = await response.json()
 
       if(result.error){
+        //We show the error in an alert
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
           text: result.error,
         })
       } else {
+        //Success alert
         Swal.fire({
           icon: 'success',
           title: 'Great!',
           text: 'Your new transaction has been saved',
         }).then(()=>{
+          //We go back to the list
           router.push('/')
         })
       }
