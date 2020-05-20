@@ -17,6 +17,10 @@ body{
   font-size: 22px;
   font-weight: 600;
 }
+.add-header .save-pending{
+  display: inline;
+  padding-left: 10px;
+}
 .list,.form{
   background-color: #fff;
   padding: 20px;

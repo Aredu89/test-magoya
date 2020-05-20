@@ -58,19 +58,22 @@ const BootstrapTable = (props) => {
       ampm
     return complete
   }
-  const deleteButton = (cell, row)=>{
+
+  const deleteButton = (cell, row, rowIndex, formatExtraData)=>{
     return (
       <div>
         <Button
           variant="contained"
           color="secondary"
           className="delete-button"
+          onClick={()=>formatExtraData.onDelete(row.id)}
         >
           X
         </Button>
       </div>
     )
   }
+
   const columns = [{
     dataField: 'date',
     text: 'Date',
@@ -102,6 +105,7 @@ const BootstrapTable = (props) => {
     text: 'Delete',
     sort: false,
     formatter: deleteButton,
+    formatExtraData: { onDelete: props.onDelete },
     align: 'center',
     headerAlign: 'center',
     headerClasses: 'delete-column'
@@ -139,7 +143,12 @@ const List = props => {
   return (
     <div className="list">
       <ErrorMessage error={props.error} />
-      <BootstrapTable data={props.data} loading={props.loading} />
+      <BootstrapTable 
+        data={props.data}
+        loading={props.loading}
+        onUpdate={props.onUpdate}
+        onDelete={props.onDelete}
+       />
     </div>
   )
 }
