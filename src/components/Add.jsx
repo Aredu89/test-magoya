@@ -50,10 +50,26 @@ const Add = () => {
 
   const [date, setDate] = useState(new Date());
   const [amount, setAmount] = useState(null)
+  const [amountError, setAmountError] = useState(false)
   const [description, setDescription] = useState('')
+  const [descriptionError, setDescriptionError] = useState(false)
   const [savePending, setSavePending] = useState(false)
 
+  //Save the transaction
   const handleSave = async () => {
+    //Error controls
+    if(amount === 0 || !amount){
+      setAmountError(true)
+      if(!description){
+        setDescriptionError(true)
+      }
+      return
+    }
+    if(!description){
+      setDescriptionError(true)
+      return
+    }
+    //If we don´t have error, we try to save
     setSavePending(true)
     const body = {
       amount,
@@ -96,6 +112,7 @@ const Add = () => {
       
     setSavePending(false)
   }
+
   return (
     <div className="add">
       <AddHeader 
@@ -105,7 +122,9 @@ const Add = () => {
       <Form
         date={{date, setDate}}
         amount={{amount, setAmount}}
+        amountError={{amountError, setAmountError}}
         description={{description, setDescription}}
+        descriptionError={{descriptionError, setDescriptionError}}
       />
     </div>
   )

@@ -48,6 +48,9 @@ body{
 .delete-column{
   width: 10%;
 }
+.delete-column:focus{
+  outline: none;
+}
 .description-column{
   width: 50%;
 }
@@ -74,8 +77,32 @@ body{
   border-radius: 4px;
   border: 1px solid darkgray;
 }
+.input-amount.error{
+  border: 1px solid red;
+}
+.input-amount-container .option {
+  font-weight: 600;
+  margin-left: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  cursor: pointer;
+}
+.input-amount-container .option.selected{
+  background-color: blue;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  color: white;
+  border-radius: 4px;
+  cursor: auto;
+}
 .input-description{
   border-radius: 4px;
   padding: 10px;
   width: 50%;
+}
+.input-description.error{
+  border: 1px solid red;
+}
+.error{
+  color: red;
 }
