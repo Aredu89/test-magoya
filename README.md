@@ -2,7 +2,7 @@
 
 Instructions:
 
-Clone the repository
+Clone the repository and 
 Run the following comands:
 - npm install
 - npm run build
